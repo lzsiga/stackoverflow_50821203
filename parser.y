@@ -33,7 +33,7 @@ void yyerror (const char *s)
     float f;
 }
 
-%error-verbose
+%define parse.error verbose
 %verbose
 %token COMMA INT ID SEMICOLON FLOAT VOID LCURL RCURL RETURN NOT IF FOR WHILE PRINTLN LPAREN RPAREN
 %token CONST_INT CONST_FLOAT LTHIRD RTHIRD 
