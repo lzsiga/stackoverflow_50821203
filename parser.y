@@ -1,7 +1,9 @@
 %{
-#include<stdio.h>
-#include<stdlib.h>  
-#include<string.h>
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "SymbolTable.h"
 #include "SymbolInfo.h"
 #include "ScopeTable.h"
@@ -371,17 +373,24 @@ arguments : arguments COMMA logic_expression
 
 int main(int argc, char *argv[])
 {
-
-    FILE *fp  ;
+    FILE *fp ;
     int token = 0;
-    if((fp = fopen(argv[1],"r")) == NULL)
-    {
-        fprintf(logout,"cannot open file");
+
+    if (argc<2) {
+        fprintf(stderr, "No parameter, exiting\n");
         exit(1);
     }
 
+    if ((fp = fopen(argv[1],"r")) == NULL) {
+        fprintf(stderr,"cannot open file '%s': %s\n", argv[1], strerror(errno));
+        exit(1);
+    }
 
     logout = fopen("log.txt","w");
+    if (logout==NULL) {
+        fprintf(stderr,"cannot open file '%s': %s\n", "log.txt", strerror(errno));
+        exit(1);
+    }
 
     yyin = fp;
     yyparse();

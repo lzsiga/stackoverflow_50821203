@@ -2,9 +2,10 @@
 
 %{
 
-#include<stdlib.h>
-#include<stdio.h>
-#include "y.tab.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "parser.h"
 #include "SymbolTable.h"
 #include "SymbolInfo.h"
 #include "ScopeTable.h"
@@ -42,20 +43,20 @@ newline \n
                     }
 
 "int" {
-        memset(&arr,NULL,sizeof(arr)); i = 0;
+        memset(&arr,0,sizeof(arr)); i = 0;
         arr[i] = "int "; 
         final_arr[k] = "int ";
         i++; k++;
         return INT;
     }
 "float" {
-        memset(&arr,NULL,sizeof(arr)); i = 0;
+        memset(&arr,0,sizeof(arr)); i = 0;
         arr[i] = "float "; final_arr[k] = "float ";
         i++; k++;
         return FLOAT;
     }
 "void"  {
-        memset(&arr,NULL,sizeof(arr)); i = 0;
+        memset(&arr,0,sizeof(arr)); i = 0;
         arr[i] = "void "; final_arr[k] = "void ";
         i++; k++;
         return VOID;
