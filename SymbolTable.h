@@ -5,4 +5,6 @@
 
 /* missing file :( */
 
+typedef struct SymbolTable SymbolTable;
+
 #endif

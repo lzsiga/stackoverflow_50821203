@@ -28,7 +28,7 @@ void yyerror (const char *s)
 %}
 
 %union {
-    class SymbolInfo* sym;
+    struct SymbolInfo* sym;
     char *s;
     float f;
 }
