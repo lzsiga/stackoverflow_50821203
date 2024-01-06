@@ -386,6 +386,16 @@ int main(int argc, char *argv[])
     FILE *fp ;
     int token = 0;
 
+    if (argc>1 && strcasecmp(argv[1], "-d")==0) {
+#if defined(YYDEBUG)
+        yydebug= 1;
+#else
+        fprintf(stderr, "sorry, it was compiled without -DYYDEBUG\n");
+#endif
+        --argc;
+        ++argv;
+    }
+
     if (argc<2) {
         fprintf(stderr, "No parameter, exiting\n");
         exit(1);

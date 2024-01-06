@@ -1,7 +1,8 @@
 # Makefile
 
-CFLAGS  := -m64 -g -W -Wall
-LDFLAGS := -m64 -g -L/usr/local/lib64 -Wl,-rpath,/usr/local/lib64
+CPPFLAGS := -DYYDEBUG
+CFLAGS   := -m64 -g -W -Wall
+LDFLAGS  := -m64 -g -L/usr/local/lib64 -Wl,-rpath,/usr/local/lib64
 
 all: parser
 
