@@ -58,13 +58,13 @@ void yyerror (const char *s)
 
 %%
 
-start : program     {   printf("start -> program\n");
+start : program     {   fprintf(stderr, "start -> program\n");
                         fprintf(logout,"%d : start ->  program\n",line_count);
                     }
       ;
 
 program : program unit {
-                            printf("program -> program unit\n");
+                            fprintf(stderr, "program -> program unit\n");
                             fprintf(logout,"%d : program -> program unit\n\n",line_count);
                             for(int j = 0; final_arr[j] != NULL; j++)
                             {
@@ -73,7 +73,7 @@ program : program unit {
                                 fprintf(logout,"\n\n");
                         }
         | unit          {
-                            printf("program -> unit\n");
+                            fprintf(stderr, "program -> unit\n");
                             fprintf(logout,"%d : program -> unit\n\n",line_count);
                             for(int j = 0; final_arr[j] != NULL; j++)
                             {
@@ -85,7 +85,7 @@ program : program unit {
         ;
 
 unit : var_dec  {
-                    printf("unit -> var_dec\n");
+                    fprintf(stderr, "unit -> var_dec\n");
                     fprintf(logout,"%d : unit -> var_dec\n\n",line_count);
                     for(int j = 0; arr[j] != NULL; j++)
                         {
@@ -119,7 +119,7 @@ unit : var_dec  {
 
 func_declaration : type_specifier ID LPAREN parameter_list RPAREN SEMICOLON     {
 
-                printf("func_declaration -> type_specifier id LPAREN parameter_list RPAREN SEMICOLON\n");
+                fprintf(stderr, "func_declaration -> type_specifier id LPAREN parameter_list RPAREN SEMICOLON\n");
                 fprintf(logout,"%d : func_declaration : type_specifier ID LPAREN parameter_list RPAREN SEMICOLON\n\n", line_count);
                 for(int j = 0; arr[j] != NULL; j++)
                         {
@@ -129,7 +129,7 @@ func_declaration : type_specifier ID LPAREN parameter_list RPAREN SEMICOLON     
 
         }
         | type_specifier ID LPAREN RPAREN SEMICOLON {
-                printf("func_declaration -> type_specifier id LPAREN RPAREN SEMICOLON\n");
+                fprintf(stderr, "func_declaration -> type_specifier id LPAREN RPAREN SEMICOLON\n");
                 fprintf(logout,"%d : func_declaration : type_specifier ID LPAREN parameter_list RPAREN SEMICOLON\n\n", line_count); 
 
                 for(int j = 0; arr[j] != NULL; j++)
@@ -143,12 +143,12 @@ func_declaration : type_specifier ID LPAREN parameter_list RPAREN SEMICOLON     
         ;
 
 func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement {
-                printf("func_definition -> type_specifier ID LPAREN parameter_list RPAREN compound_statement\n");
+                fprintf(stderr, "func_definition -> type_specifier ID LPAREN parameter_list RPAREN compound_statement\n");
                 fprintf(logout,"%d : func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement\n\n", line_count); 
 
         }
         | type_specifier ID LPAREN RPAREN compound_statement {
-                printf("func_definition -> type_specifier id LPAREN RPAREN compound_statement\n");
+                fprintf(stderr, "func_definition -> type_specifier id LPAREN RPAREN compound_statement\n");
                 fprintf(logout,"%d : func_definition : type_specifier ID LPAREN RPAREN compound_statement\n\n", line_count);    
 
         }
@@ -157,7 +157,7 @@ func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statem
 
 parameter_list  : parameter_list COMMA type_specifier ID {
 
-                printf("parameter_list -> parameter_list COMMA type_specifier ID\n");
+                fprintf(stderr, "parameter_list -> parameter_list COMMA type_specifier ID\n");
                 fprintf(logout,"%d : parameter_list  : parameter_list COMMA type_specifier ID\n\n", line_count);    
                 for(int j = 0; arr[j] != NULL; j++)
                         {
@@ -167,12 +167,12 @@ parameter_list  : parameter_list COMMA type_specifier ID {
 
         }
         | parameter_list COMMA type_specifier {
-                printf("parameter_list -> parameter_list COMMA type_specifier\n");
+                fprintf(stderr, "parameter_list -> parameter_list COMMA type_specifier\n");
                 fprintf(logout,"%d : parameter_list  : parameter_list COMMA type_specifier\n\n", line_count);   
 
         }
         | type_specifier ID {
-                printf("parameter_list -> type_specifier ID\n");
+                fprintf(stderr, "parameter_list -> type_specifier ID\n");
                 fprintf(logout,"%d : parameter_list : type_specifier ID\n\n", line_count);  
                 for(int j = 0; arr[j] != NULL; j++)
                         {
@@ -181,7 +181,7 @@ parameter_list  : parameter_list COMMA type_specifier ID {
                     fprintf(logout,"\n\n");
         }
         | type_specifier {
-                printf("parameter_list -> type_specifier\n");
+                fprintf(stderr, "parameter_list -> type_specifier\n");
                 fprintf(logout,"%d :  parameter_list : type_specifier \n\n", line_count);   
 
         }
@@ -189,7 +189,7 @@ parameter_list  : parameter_list COMMA type_specifier ID {
 
 
 compound_statement : LCURL statements RCURL {
-    printf("compound_statement -> LCURL statements RCURL\n");
+    fprintf(stderr, "compound_statement -> LCURL statements RCURL\n");
     fprintf(logout,"compound_statement : LCURL statements RCURL\n\n");
 }
             | LCURL RCURL
@@ -197,7 +197,7 @@ compound_statement : LCURL statements RCURL {
 
 var_dec: type_specifier declaration_list SEMICOLON {
 
-                    printf("var_dec -> type_specifier declaration_list SEMICOLON \n");
+                    fprintf(stderr, "var_dec -> type_specifier declaration_list SEMICOLON \n");
                     fprintf(logout,"%d : var_dec: type_specifier declaration_list SEMICOLON \n\n", line_count);
 
                     for(int j = 0; arr[j] != NULL; j++)
@@ -209,14 +209,14 @@ var_dec: type_specifier declaration_list SEMICOLON {
             }
         ;            
 
-type_specifier : INT    {printf("type_specifier -> INT\n");
+type_specifier : INT    {fprintf(stderr, "type_specifier -> INT\n");
                             fprintf(logout,"%d : type_specifier-> INT\n\n%s\n\n", line_count,yytext);
                         }
-               | FLOAT  {printf("type_specifier ->FLOAT\n");
+               | FLOAT  {fprintf(stderr, "type_specifier ->FLOAT\n");
                             fprintf(logout,"%d : type_specifier-> FLOAT\n\n%s\n\n",line_count, yytext);
 
                         }
-               | VOID   {printf("type_specifier -> VOID\n");
+               | VOID   {fprintf(stderr, "type_specifier -> VOID\n");
                             fprintf(logout,"%d : type_specifier-> VOID\n\n%s\n\n",line_count, yytext);
 
                          }
@@ -224,7 +224,7 @@ type_specifier : INT    {printf("type_specifier -> INT\n");
 
 declaration_list : declaration_list COMMA ID {
 
-                        printf("declaration_list -> declaration_list COMMA ID\n");  
+                        fprintf(stderr, "declaration_list -> declaration_list COMMA ID\n");  
                         fprintf(logout,"%d : declaration_list -> declaration_list COMMA ID\n\n",line_count);
                         for(int j = 1; arr[j+1] != NULL; j++)
                         {
@@ -234,7 +234,7 @@ declaration_list : declaration_list COMMA ID {
                        }
                  | declaration_list COMMA ID LTHIRD CONST_INT RTHIRD {
 
-                        printf("declaration_list -> declaration_list COMMA ID LTHIRD CONST_INT RTHIRD\n");      
+                        fprintf(stderr, "declaration_list -> declaration_list COMMA ID LTHIRD CONST_INT RTHIRD\n");      
                         fprintf(logout,"%d : declaration_list -> declaration_list COMMA ID LTHIRD CONST_INT RTHIRD\n",line_count);
                         for(int j = 1; arr[j+1] != NULL; j++)
                         {
@@ -244,7 +244,7 @@ declaration_list : declaration_list COMMA ID {
 
                         }
                  |ID    {
-                        printf("declaration_list -> ID\n");
+                        fprintf(stderr, "declaration_list -> ID\n");
                         fprintf(logout,"%d : declaration_list -> ID\n\n",line_count);
                         for(int j = 1; arr[j+1] != NULL; j++)
                         {
@@ -254,7 +254,7 @@ declaration_list : declaration_list COMMA ID {
                         }
                  |ID LTHIRD CONST_INT RTHIRD {
 
-                        printf("declaration_list -> ID LTHIRD CONST_INT RTHIRD\n"); 
+                        fprintf(stderr, "declaration_list -> ID LTHIRD CONST_INT RTHIRD\n"); 
                         fprintf(logout,"%d : declaration_list -> ID LTHIRD CONST_INT RTHIRD\n",line_count);
                         for(int j = 1; arr[j+1] != NULL; j++)
                         {
@@ -266,7 +266,7 @@ declaration_list : declaration_list COMMA ID {
                  ;  
 
 statements : statement {
-    printf("statements -> statement\n");
+    fprintf(stderr, "statements -> statement\n");
     fprintf(logout,"%d : statements : statement\n\n",line_count);
     fprintf(logout, "%s\n\n",yytext);
 }
@@ -281,7 +281,7 @@ statement : var_dec
       | WHILE LPAREN expression RPAREN statement
       | PRINTLN LPAREN ID RPAREN SEMICOLON
       | RETURN expression SEMICOLON  {
-            printf("statement -> RETURN expression SEMICOLON\n");
+            fprintf(stderr, "statement -> RETURN expression SEMICOLON\n");
             fprintf(logout,"%d : statement : RETURN expression SEMICOLON\n\n",line_count);
             fprintf(logout, "%s\n\n",yytext);
       }
@@ -292,7 +292,7 @@ expression_statement    : SEMICOLON
             ;
 
 variable : ID   {
-                    printf("variable -> ID\n");
+                    fprintf(stderr, "variable -> ID\n");
                     fprintf(logout,"%d : variable : ID\n\n",line_count);
                     fprintf(logout, "%s\n\n",yytext);
 }   
@@ -300,7 +300,7 @@ variable : ID   {
      ;
 
  expression : logic_expression  {
-        printf("expression -> logic_expression\n");
+        fprintf(stderr, "expression -> logic_expression\n");
         fprintf(logout,"%d : expression : logic_expression\n\n",line_count);
         fprintf(logout, "%s\n\n",yytext);
  }
@@ -312,7 +312,7 @@ logic_expression : rel_expression
          ;
 
 rel_expression  : simple_expression {
-    printf("rel_expression  -> simple_expression \n");
+    fprintf(stderr, "rel_expression  -> simple_expression \n");
     fprintf(logout,"%d : rel_expression : simple_expression\n\n",line_count);
     fprintf(logout, "%s\n\n",yytext);
 }
@@ -320,24 +320,24 @@ rel_expression  : simple_expression {
         ;
 
 simple_expression : term {
-    printf("simple_expression -> term\n");
+    fprintf(stderr, "simple_expression -> term\n");
     fprintf(logout,"%d : simple_expression : term \n\n",line_count);
     fprintf(logout, "%s\n\n",yytext);
 } 
           | simple_expression ADDOP term {
-            printf("simple_expression -> simple_expression ADDOP(%c) term\n", $2);
+            fprintf(stderr, "simple_expression -> simple_expression ADDOP(%c) term\n", $2);
             fprintf(logout,"simple_expression : simple_expression ADDOP(%c) term \n\n", $2);
             fprintf(logout, "%s\n\n",yytext);
           }
           ;
 
 term :  unary_expression {
-                printf("term -> unary_expression\n");
+                fprintf(stderr, "term -> unary_expression\n");
                 fprintf(logout,"%d : term : unary_expression\n\n",line_count);
                 fprintf(logout, "%s\n\n",yytext);
             }
      |  term MULOP unary_expression {
-                printf("term -> term MULOP(%c) unary_expression \n", $2);
+                fprintf(stderr, "term -> term MULOP(%c) unary_expression \n", $2);
                 fprintf(logout,"%d : term -> term MULOP(%c) unary_expression\n\n", line_count, $2);
                 fprintf(logout, "%s\n\n",yytext);
             }
@@ -346,14 +346,14 @@ term :  unary_expression {
 unary_expression : ADDOP unary_expression  
          | NOT unary_expression 
          | factor {
-            printf("unary_expression -> factor\n");
+            fprintf(stderr, "unary_expression -> factor\n");
             fprintf(logout,"%d : unary_expression : factor\n\n",line_count);
             fprintf(logout, "%s\n\n",yytext);
          }
          ;
 
 factor  : variable {
-    printf("factor -> variable\n");
+    fprintf(stderr, "factor -> variable\n");
     fprintf(logout,"%d : factor : variable\n\n",line_count);
     fprintf(logout, "%s\n\n",yytext);
 }
@@ -373,11 +373,11 @@ arguments : arguments COMMA logic_expression
           | logic_expression
           ;
 
-MULOP : '*' { $$ = '*'; printf("MULOP*\n"); }
-      | '/' { $$ = '/'; printf("MULOP/\n"); }
+MULOP : '*' { $$ = '*'; fprintf(stderr, "MULOP*\n"); }
+      | '/' { $$ = '/'; fprintf(stderr, "MULOP/\n"); }
 
-ADDOP : '+' { $$ = '+'; printf("ADDOP+\n"); }
-      | '-' { $$ = '-'; printf("ADDOP-\n"); }
+ADDOP : '+' { $$ = '+'; fprintf(stderr, "ADDOP+\n"); }
+      | '-' { $$ = '-'; fprintf(stderr, "ADDOP-\n"); }
 
 %%
 
