@@ -33,13 +33,16 @@ void yyerror (const char *s)
     struct SymbolInfo* sym;
     char *s;
     float f;
+    char c;
 }
 
 %define parse.error verbose
 %verbose
 %token COMMA INT ID SEMICOLON FLOAT VOID LCURL RCURL RETURN NOT IF FOR WHILE PRINTLN LPAREN RPAREN
-%token CONST_INT CONST_FLOAT LTHIRD RTHIRD 
-%token ADDOP MULOP INCOP DECOP RELOP LOGICOP ASSIGNOP
+%token CONST_INT CONST_FLOAT LTHIRD RTHIRD
+%token INCOP DECOP RELOP LOGICOP ASSIGNOP
+
+%type <c> ADDOP MULOP
 
 %token <f> DOUBLE
 //%expect 1
@@ -322,8 +325,8 @@ simple_expression : term {
     fprintf(logout, "%s\n\n",yytext);
 } 
           | simple_expression ADDOP term {
-            printf("simple_expression -> simple_expression ADDOP term\n");
-            fprintf(logout,"simple_expression : simple_expression ADDOP term \n\n");
+            printf("simple_expression -> simple_expression ADDOP(%c) term\n", $2);
+            fprintf(logout,"simple_expression : simple_expression ADDOP(%c) term \n\n", $2);
             fprintf(logout, "%s\n\n",yytext);
           }
           ;
@@ -333,7 +336,11 @@ term :  unary_expression {
                 fprintf(logout,"%d : term : unary_expression\n\n",line_count);
                 fprintf(logout, "%s\n\n",yytext);
             }
-     |  term MULOP unary_expression
+     |  term MULOP unary_expression {
+                printf("term -> term MULOP(%c) unary_expression \n", $2);
+                fprintf(logout,"%d : term -> term MULOP(%c) unary_expression\n\n", line_count, $2);
+                fprintf(logout, "%s\n\n",yytext);
+            }
      ;
 
 unary_expression : ADDOP unary_expression  
@@ -366,8 +373,11 @@ arguments : arguments COMMA logic_expression
           | logic_expression
           ;
 
+MULOP : '*' { $$ = '*'; printf("MULOP*\n"); }
+      | '/' { $$ = '/'; printf("MULOP/\n"); }
 
-
+ADDOP : '+' { $$ = '+'; printf("ADDOP+\n"); }
+      | '-' { $$ = '-'; printf("ADDOP-\n"); }
 
 %%
 
