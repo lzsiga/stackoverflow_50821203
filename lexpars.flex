@@ -60,9 +60,10 @@ newline \n
         arr[i] = "void "; final_arr[k] = "void ";
         i++; k++;
         return VOID;
-    }   
-
-
+    }
+"return" {if (yy_flex_debug) fprintf(stderr, "lexpars.flex: returning keyword '%s'\n", yytext);
+          return RETURN;
+    }
 ";" {
         arr[i] = ";";final_arr[k] = ";";
         i++; k++;
