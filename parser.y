@@ -389,6 +389,7 @@ int main(int argc, char *argv[])
     if (argc>1 && strcasecmp(argv[1], "-d")==0) {
 #if defined(YYDEBUG)
         yydebug= 1;
+        yyset_debug(1);
 #else
         fprintf(stderr, "sorry, it was compiled without -DYYDEBUG\n");
 #endif

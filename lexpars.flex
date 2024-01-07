@@ -93,10 +93,11 @@ newline \n
             //fprintf(logout,"arr [%d] %s\n ",j,arr[j]);
         }
         //fprintf(logout,"\n\n");
-        fprintf(stderr, "lexpars.flex: returning '%s'\n", yylval.s);
+        if (yy_flex_debug) fprintf(stderr, "lexpars.flex: returning ID '%s'\n", yylval.s);
         return ID;
         }
 
-[=*/+-]  { fprintf(stderr, "lexpars.flex: returning '%c'\n", yytext[0]); yylval.c = yytext[0]; }
+[=*/+-]  { if (yy_flex_debug) fprintf(stderr, "lexpars.flex: returning '%c'\n", yytext[0]);
+           return yylval.c = yytext[0]; }
 
 %%
