@@ -14,6 +14,8 @@ extern char* yytext;
 extern FILE * yyin;
 extern int tableSize;
 
+extern void yyset_debug(int);
+
 FILE *logout;
 extern int line_count;
 extern char *arr[100];
@@ -384,7 +386,8 @@ ADDOP : '+' { $$ = '+'; fprintf(stderr, "ADDOP+\n"); }
 int main(int argc, char *argv[])
 {
     FILE *fp ;
-    int token = 0;
+    char *progname= argv[0];
+/*  int token = 0; */
 
     if (argc>1 && strcasecmp(argv[1], "-d")==0) {
 #if defined(YYDEBUG)
@@ -398,7 +401,7 @@ int main(int argc, char *argv[])
     }
 
     if (argc<2) {
-        fprintf(stderr, "No parameter, exiting\n");
+        fprintf(stderr, "usage: %s [-d] inputfile\n", progname);
         exit(1);
     }
 
